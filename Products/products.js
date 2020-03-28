@@ -208,20 +208,20 @@ let products=(function(p,r){
 
 
     function generateList() {
-        // r.GET()
-        // .then(r.JSON)
-        // .then(function(data){
-        //     if (data && data.length) {
-        //         domReference.productlisting.innerHTML=p.getProductListTable(d)
-        //         BindListEvents()               
-        //     }
-        //     else{
-        //         domReference.productlisting.innerHTML="No Products Found"
-        //     }
-        // })
-        // .catch(function(e){
-        //     console.log(e)
-        // })        
+        r.GET()
+        .then(r.JSON)
+        .then(function(data){
+            if (data && data.length) {
+                domReference.productlisting.innerHTML=p.getProductListTable(d)
+                BindListEvents()               
+            }
+            else{
+                domReference.productlisting.innerHTML="No Products Found"
+            }
+        })
+        .catch(function(e){
+            console.log(e)
+        })        
         let d=[
             {
             productid:1,
@@ -255,23 +255,22 @@ let products=(function(p,r){
         }
     }
 
-    function EditProductCLicked() {
-        debugger;
+    function EditProductCLicked() {        
         let productid=event.target.attributes["data-id"].value
-        if (productid) {                
-            // r.GET(,{"productid":productid})
-            // .then(r.JSON)
-            // .then(function(data) {
-            //     if (data) {
-            //         btnAddProductClick(data)    
-            //     }
-            //     else{
-            //         alert("Error getting Product Info,Please try again later")
-            //     }                
-            // })
-            // .catch(function(e) {
-            //     console.log(e)
-            // })
+        if (productid) {
+            r.GET(,{"productid":productid})
+            .then(r.JSON)
+            .then(function(data) {
+                if (data) {
+                    btnAddProductClick(data)    
+                }
+                else{
+                    alert("Error getting Product Info,Please try again later")
+                }                
+            })
+            .catch(function(e) {
+                console.log(e)
+            })
         }
         console.log(productid)
     }
@@ -279,21 +278,21 @@ let products=(function(p,r){
     function DeleteProductCLicked() {        
         if (confirm("do you want to delete this product..??")) {         
             let productid=event.target.attributes["data-id"].value
-            // if (productid) {                                
-            //     r.GET(,{"productid":productid})
-            //     .then(r.JSON)
-            //     .then(function(data) {
-            //         if (data) {
-            //             alert("Product Deleted Successfully")       
-            //         }
-            //         else{
-            //             alert("Error Deleting Product,Please try again")
-            //         }
-            //     })
-            //     .catch(function(e) {
-            //         console.log(e)
-            //     })
-            // }
+            if (productid) {                                
+                r.GET(,{"productid":productid})
+                .then(r.JSON)
+                .then(function(data) {
+                    if (data) {
+                        alert("Product Deleted Successfully")       
+                    }
+                    else{
+                        alert("Error Deleting Product,Please try again")
+                    }
+                })
+                .catch(function(e) {
+                    console.log(e)
+                })
+            }
         }
         return
     }
@@ -394,18 +393,18 @@ let products=(function(p,r){
         }
 
         if (product) {
-            // r.POST(,{"product":product})
-            // .then(r.JSON)
-            // .then(function(d) {
-            //     if(d){
-            //         alert("Product Saved Successfully")
-            //     }else{
-            //         alert("Error Saving Product,Please try again")
-            //     }
-            // })
-            // .catch(function(e) {
-            //    console.log(e) 
-            // })
+            r.POST(,{"product":product})
+            .then(r.JSON)
+            .then(function(d) {
+                if(d){
+                    alert("Product Saved Successfully")
+                }else{
+                    alert("Error Saving Product,Please try again")
+                }
+            })
+            .catch(function(e) {
+               console.log(e) 
+            })
         }
         console.log(product)
     }
