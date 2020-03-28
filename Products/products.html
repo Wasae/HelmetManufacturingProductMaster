@@ -1,0 +1,20 @@
+<html>
+    <body>
+        <div>
+            <button id="btnAddProduct">Add Products</button>
+        </div>
+        <div id="productlisting">
+                Product Listing here
+        </div>
+        <div id="productCRUD" style="display: none;">
+                product crud here
+        </div>
+        <script defer src="request.js"></script>
+        <script defer src="products.js"></script>
+        <script>
+            window.onload=function(){
+                products.init()
+            }
+        </script>
+    </body>
+</html>
