@@ -29,6 +29,7 @@ let tag=(function() {
 }())
 
 let productsHTML=(function(t) {
+
     function getEmptyAddProductScreen() {
         let html=""        
         html+=t.Ofieldset
@@ -46,7 +47,7 @@ let productsHTML=(function(t) {
                 html+=t.CTr
                 html+=t.OTr
                     html+=t.OTd+getLabel("Variations")+t.CTd
-                    html+=t.OTd+t.Odiv+formVariation()+t.Cdiv+getButton()+t.CTd
+                    html+=t.OTd+t.Odiv+formVariation({})+t.Cdiv+getButton()+t.CTd
                 html+=t.CTr
             html+=t.Ctable
             html+="<button id='saveProduct'>Save</button>"
@@ -55,22 +56,52 @@ let productsHTML=(function(t) {
         return html
     }
 
-    function getPrepopulatedScreen(params) {
-        
+    function getPrepopulatedScreen(d) {
+        let html=""        
+        html+=t.Ofieldset
+            html+=t.Olegend
+            html+="Product"
+            html+=t.Clegend
+            html+=t.Otable
+                html+=t.OTr
+                    html+=t.OTd+getLabel("Name")+t.CTd
+                    html+=t.OTd+getTextBox({p:"Product Name",v:d.productname || "",i:"productname"})+t.CTd
+                html+=t.CTr
+                html+=t.OTr
+                    html+=t.OTd+getLabel("Description")+t.CTd
+                    html+=t.OTd+getTextBox({p:"Product Description",v:d.description || "",i:"productdescription"})+t.CTd
+                html+=t.CTr
+                html+=t.OTr
+                    html+=t.OTd+getLabel("Variations")+t.CTd
+                    if (!d.variations) {
+                        html+=t.OTd+t.Odiv+formVariation({})+t.Cdiv+getButton()+t.CTd
+                    }
+                    else{
+                        html+=t.OTd+t.Odiv+
+                        d.variations.map(function(d,ix){
+                                return formVariation(d)
+                        }).join('')+t.Cdiv+getButton()+t.CTd
+                    }
+                html+=t.CTr
+            html+=t.Ctable
+            html+="<button id='saveProduct'>Save</button>"
+            html+="<button id='cancelProduct'>Cancel</button>"
+        html+=t.Cfieldset
+        return html
     }
 
-    function formVariation(params) {
+    function formVariation(d) {
         let html=""
             html+=t.Odiv
             html+=t.HR
                 html+=t.Otable
                     html+=t.OTr
                         html+=t.OTd+getLabel("Name")+t.CTd
-                        html+=t.OTd+getTextBox({p:"Variation Name",v:"",i:"variationname"})+t.CTd
+                        html+=t.OTd+getTextBox({p:"Variation Name",v:d.variationname ||"",i:"variationname"})+t.CTd
                     html+=t.CTr
                     html+=t.OTr
                         html+=t.OTd+getLabel("Description")+t.CTd                        
-                        html+=t.OTd+getTextBox({p:"Variation Description",v:"",i:"variationdescription"})+t.CTd
+                        html+=t.OTd+getTextBox({p:"Variation Description",v:d.variationdescription || "",i:"variationdescription"})+t.CTd
                         html+=t.OTd+("<button class='btnRemoveVariation'>Remove</button>")+t.CTd
                     html+=t.CTr
                     html+=t.OTr
@@ -180,8 +211,13 @@ let products=(function(p,r){
         // r.GET()
         // .then(r.JSON)
         // .then(function(data){
-        //     domReference.productlisting.innerHTML=p.getProductListTable(d)
-        //     BindListEvents()
+        //     if (data && data.length) {
+        //         domReference.productlisting.innerHTML=p.getProductListTable(d)
+        //         BindListEvents()               
+        //     }
+        //     else{
+        //         domReference.productlisting.innerHTML="No Products Found"
+        //     }
         // })
         // .catch(function(e){
         //     console.log(e)
@@ -222,33 +258,42 @@ let products=(function(p,r){
     function EditProductCLicked() {
         debugger;
         let productid=event.target.attributes["data-id"].value
-        if (productid) {
+        if (productid) {                
             // r.GET(,{"productid":productid})
             // .then(r.JSON)
             // .then(function(data) {
-                
+            //     if (data) {
+            //         btnAddProductClick(data)    
+            //     }
+            //     else{
+            //         alert("Error getting Product Info,Please try again later")
+            //     }                
             // })
             // .catch(function(e) {
             //     console.log(e)
             // })
-        }        
+        }
         console.log(productid)
     }
 
-    function DeleteProductCLicked() {
-        debugger;
+    function DeleteProductCLicked() {        
         if (confirm("do you want to delete this product..??")) {         
             let productid=event.target.attributes["data-id"].value
-            if (productid) {
-                // r.GET(,{"productid":productid})
-                // .then(r.JSON)
-                // .then(function(data) {
-                    
-                // })
-                // .catch(function(e) {
-                //     console.log(e)
-                // })
-            }
+            // if (productid) {                                
+            //     r.GET(,{"productid":productid})
+            //     .then(r.JSON)
+            //     .then(function(data) {
+            //         if (data) {
+            //             alert("Product Deleted Successfully")       
+            //         }
+            //         else{
+            //             alert("Error Deleting Product,Please try again")
+            //         }
+            //     })
+            //     .catch(function(e) {
+            //         console.log(e)
+            //     })
+            // }
         }
         return
     }
@@ -266,7 +311,13 @@ let products=(function(p,r){
     }
 
     function btnAddProductClick() {
-        domReference.productCRUD.innerHTML=p.getHTML() || ""
+        if (arguments[0] && !arguments[0].target) {
+            domReference.productCRUD.innerHTML=p.getHTML(arguments[0]) 
+        }
+        else{
+            domReference.productCRUD.innerHTML=p.getHTML() || ""    
+        }
+        
         BindOnVariations()
         Elementshowhide(domReference.productlisting,"none")
         Elementshowhide(domReference.productCRUD,"")
@@ -346,10 +397,14 @@ let products=(function(p,r){
             // r.POST(,{"product":product})
             // .then(r.JSON)
             // .then(function(d) {
-                
+            //     if(d){
+            //         alert("Product Saved Successfully")
+            //     }else{
+            //         alert("Error Saving Product,Please try again")
+            //     }
             // })
             // .catch(function(e) {
-                
+            //    console.log(e) 
             // })
         }
         console.log(product)
