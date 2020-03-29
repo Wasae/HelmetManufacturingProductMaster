@@ -19,7 +19,7 @@ let requestModule=(function(){
 
     function makePOST(url,obj){
         try {
-            return fetch(urls,{
+            return fetch(url,{
                 'method': 'POST',
                 'crossDomain': true,
                 'headers':{
@@ -35,7 +35,7 @@ let requestModule=(function(){
 
     function makePUT(url,obj){
         try {
-            return fetch(urls,{
+            return fetch(url,{
                 'method': 'PUT',
                 'crossDomain': true,
                 'headers':{
@@ -51,7 +51,7 @@ let requestModule=(function(){
 
     function makeDELETE(url,obj){
         try {
-            return fetch(urls,{
+            return fetch(url,{
                 'method': 'DELETE',
                 'crossDomain': true,
                 'headers':{
