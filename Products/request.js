@@ -1,7 +1,7 @@
 let requestModule=(function(){
-    function makeGET(url,q){
+    function makeGET(u,q){
         try {
-            let url=new URL(url)
+            let url=new URL(u)
             if (q) {
                 Object.keys(q).map(function(a) {
                     return url.searchParams.append(a,q[a])
