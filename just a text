@@ -1,0 +1,73 @@
+js suggestions to avaoid :																									
+1. Make Js Unobtrusive (to make UI seperate from js completely basically seperation of concerns)																									
+2. avoid selecting same elements repeatedly(Basically cache DOM elements)																									
+3. Code in Modular Pattern (So that every module is responsible for only one Set of functionalities)																									
+4. Load everything on very first request,so that multiple request can be avoided and It becomes SPA																									
+5. Not to use Ajax anywhere directly,will have a common module from which ajax related code will written to avoid sphagetti code(Tyring to clean the code)																									
+6. All Dropdwon related Options should be cached and should be use as and when required.																									
+7. Proper Rowid generation and tracking of such rowids for tables for easy and fast data retreival(when collecting from complex dynamictable or forms)																									
+8. load all extra js in defer mode so that page can load faster(DOM Parsing and Scripts downloading in parallel and then script execution)																									
+9. Handling filters on clientside if data is less.(Just make it fast and avoidng extra request)																									
+10. Will try to make it fully in vanilla js so that no other extra reference will be added and its dowloading time will reduce and page will load comparatively faster.											
+
+	Existing Tables
+
+		Speciality_Master
+		Provider_Speciality_Mapping
+		physiciancategorymapping
+
+		category_master	
+			Cutoff ID
+			Minrange
+			Max Range
+			IsActive 
+			IsDeleted
+			CreatedBy
+			CreatedDate
+			Modified By
+			ModifiedDate
+			SC Conversation
+			AV Conversation
+			VA Conversation
+		
+		CutOffMaster
+			ID
+			yCutOffDisplayname
+			CutoffDiscrionption
+			IsActive 
+			IsDeleted
+			CreatedBy
+			CreatedDate
+			Modified By
+			ModifiedDate
+		
+		CutOffMaster
+			ID
+			CutOffDisplayname
+			CutoffDescription
+			IsActive 
+			IsDeleted
+			CreatedBy
+			CreatedDate
+			Modified By
+			ModifiedDate																
+			category_master_History	
+			CatogorymasterID
+			Scribe Conversation old
+			Scribe Conversation new
+			AV Conversation old
+			AV Conversation new
+			VA Conversation old
+			VA Conversation new
+			Category old
+			Category new
+			Description old
+			Description new
+			Cutoff ID old
+			Cutoff ID new
+			Minrange old
+			Minrange new
+			Max Range old
+			Max Range new
+			CreatedBy
+			CreatedDate
